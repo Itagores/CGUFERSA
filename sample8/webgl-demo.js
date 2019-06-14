@@ -2,13 +2,13 @@ var cubeRotation = 0.0;
 // will set to true when video can be copied to texture
 var copyVideo = false;
 
-main();
+main8();
 
 //
 // Start here
 //
-function main() {
-  const canvas = document.querySelector('#glcanvas');
+function main8() {
+  const canvas = document.querySelector('#glcanvas8');
   const gl = canvas.getContext('webgl');
 
   // If we don't have a GL context, give up now

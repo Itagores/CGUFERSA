@@ -1,12 +1,12 @@
 var squareRotation = 0.0;
 
-main();
+main4();
 
 //
 // Start here
 //
-function main() {
-  const canvas = document.querySelector('#glcanvas');
+function main4() {
+  const canvas = document.querySelector('#glcanvas4');
   const gl = canvas.getContext('webgl');
 
   // If we don't have a GL context, give up now

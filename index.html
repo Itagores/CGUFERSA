@@ -4,58 +4,308 @@
     <meta charset="UTF-8">
     <title>CG | UFERSA</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/css/mdb.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../webgl.css" type="text/css">
+
+    <script src="./gl-matrix.js"></script>
+
 
 </head>
 <body>
 
 <div class="content">
 
-    <h1>Computação Gráfica - UFERSA</h1>
+    <div class="jumbotron card card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
+        <div class="text-white text-center py-5 px-4">
+            <div>
+                <h2 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>Create your beautiful website with MDBootstrap</strong></h2>
+                <p class="mx-5 mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat fugiat, laboriosam, voluptatem,
+                    optio vero odio nam sit officia accusamus minus error nisi architecto nulla ipsum dignissimos. Odit sed qui, dolorum!
+                </p>
+                <a class="btn btn-outline-white btn-md"><i class="fas fa-clone left"></i> View project</a>
+            </div>
+        </div>
+    </div>
 
-    <p>
-        <a href="sample1/index.html">primeiro exemplo</a>
-    </p>
-    <p>
+    <div style="padding-left: 32px; margin-right: 32px">
+        <div class="row">
+            <div class="col-sm">
+                <!-- Card -->
+                <div class="card"  style="margin-bottom: 32px">
 
-        <a href="sample2/index.html">segundo exemplo</a>
-    </p>
-    <p>
+                    <!-- Card image -->
+                    <div class="view overlay">
+                        <canvas id="glcanvas1" class="card-img-top"></canvas>
+                        <!--<img class="card-img-top" src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg" alt="Card image cap">-->
+                        <a href="#!">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
 
-        <a href="sample3/index.html">terceiro exemplo</a>
-    </p>
-    <p>
+                    <!-- Card content -->
+                    <div class="card-body">
 
-        <a href="sample4/index.html">quarto exemplo</a>
-    </p>
-    <p>
+                        <!-- Title -->
+                        <h4 class="card-title">Card title</h4>
+                        <!-- Text -->
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <!-- Button -->
+                        <a href="sample1/index.html" class="btn btn-primary">Button</a>
 
-        <a href="sample5/index.html">quinto exemplo</a>
-    </p>
-    <p>
+                    </div>
 
-        <a href="sample6/index.html">sexto exemplo</a>
-    </p>
-    <p>
+                    <script>
+                        main();
 
-        <a href="sample7/index.html">setimo exemplo</a>
-    </p>
-    <p>
+                        //
+                        // start here
+                        //
+                        function main() {
+                            const canvas = document.querySelector("#glcanvas1");
+                            // Initialize the GL context
+                            const gl = canvas.getContext("webgl");
 
-        <a href="sample8/index.html">oitavo exemplo</a>
-    </p>
+                            // Only continue if WebGL is available and working
+                            if (!gl) {
+                                alert("Unable to initialize WebGL. Your browser or machine may not support it.");
+                                return;
+                            }
+
+                            // Set clear color to black, fully opaque
+                            gl.clearColor(0.0, 0.0, 0.0, 1.0);
+                            // Clear the color buffer with specified clear color
+                            gl.clear(gl.COLOR_BUFFER_BIT);
+                        }
+                    </script>
+
+                </div>
+                <!-- Card -->
+            </div>
+            <div class="col-sm">
+                <!-- Card -->
+                <div class="card"  style="margin-bottom: 32px">
+
+                    <!-- Card image -->
+                    <div class="view overlay">
+                        <canvas id="glcanvas2" class="card-img-top"></canvas>
+                        <a href="#!">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+
+                    <!-- Card content -->
+                    <div class="card-body">
+
+                        <!-- Title -->
+                        <h4 class="card-title">Card title</h4>
+                        <!-- Text -->
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <!-- Button -->
+                        <a href="sample2/index.html" class="btn btn-primary">Button</a>
+
+                    </div>
+
+                    <script src="./sample2/webgl-demo.js"></script>
+
+                </div>
+                <!-- Card -->
+            </div>
+            <div class="col-sm">
+                <!-- Card -->
+                <div class="card"  style="margin-bottom: 32px">
+
+                    <!-- Card image -->
+                    <div class="view overlay">
+                        <canvas  class="card-img-top" id="glcanvas3"></canvas>
+                        <a href="#!">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+
+                    <!-- Card content -->
+                    <div class="card-body">
+
+                        <!-- Title -->
+                        <h4 class="card-title">Card title</h4>
+                        <!-- Text -->
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <!-- Button -->
+                        <a href="sample3/index.html" class="btn btn-primary">Button</a>
+
+                    </div>
+
+                    <script src="./sample3/webgl-demo.js"></script>
+
+                </div>
+                <!-- Card -->
+            </div>
+            <div class="col-sm">
+                <!-- Card -->
+                <div class="card"  style="margin-bottom: 32px">
+
+                    <!-- Card image -->
+                    <div class="view overlay">
+                        <canvas class="card-img-top" id="glcanvas4"></canvas>
+                        <a href="#!">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+
+                    <!-- Card content -->
+                    <div class="card-body">
+
+                        <!-- Title -->
+                        <h4 class="card-title">Card title</h4>
+                        <!-- Text -->
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <!-- Button -->
+                        <a href="sample4/index.html" class="btn btn-primary">Button</a>
+
+                    </div>
+
+                    <script src="./sample4/webgl-demo.js"></script>
+
+                </div>
+                <!-- Card -->
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <!-- Card -->
+                <div class="card"  style="margin-bottom: 32px">
+
+                    <!-- Card image -->
+                    <div class="view overlay">
+                        <canvas class="card-img-top" id="glcanvas5"></canvas>
+                        <a href="#!">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+
+                    <!-- Card content -->
+                    <div class="card-body">
+
+                        <!-- Title -->
+                        <h4 class="card-title">Card title</h4>
+                        <!-- Text -->
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <!-- Button -->
+                        <a href="sample5/index.html" class="btn btn-primary">Button</a>
+
+                    </div>
+
+                    <script src="./sample5/webgl-demo.js"></script>
+
+                </div>
+                <!-- Card -->
+            </div>
+            <div class="col-sm">
+                <!-- Card -->
+                <div class="card"  style="margin-bottom: 32px">
+
+                    <!-- Card image -->
+                    <div class="view overlay">
+                        <canvas class="card-img-top" id="glcanvas6"></canvas>
+                        <a href="#!">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+
+                    <!-- Card content -->
+                    <div class="card-body">
+
+                        <!-- Title -->
+                        <h4 class="card-title">Card title</h4>
+                        <!-- Text -->
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <!-- Button -->
+                        <a href="sample6/index.html" class="btn btn-primary">Button</a>
+
+                    </div>
+
+                    <script src="./sample6/webgl-demo.js"></script>
+
+
+                </div>
+                <!-- Card -->
+            </div>
+            <div class="col-sm">
+                <!-- Card -->
+                <div class="card"  style="margin-bottom: 32px">
+
+                    <!-- Card image -->
+                    <div class="view overlay">
+                        <canvas class="card-img-top" id="glcanvas7"></canvas>
+                        <a href="#!">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+
+                    <!-- Card content -->
+                    <div class="card-body">
+
+                        <!-- Title -->
+                        <h4 class="card-title">Card title</h4>
+                        <!-- Text -->
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <!-- Button -->
+                        <a href="sample7/index.html" class="btn btn-primary">Button</a>
+
+                    </div>
+                    <script src="./sample7/webgl-demo.js"></script>
+
+                </div>
+                <!-- Card -->
+            </div>
+            <div class="col-sm">
+                <!-- Card -->
+                <div class="card"  style="margin-bottom: 32px">
+
+                    <!-- Card image -->
+                    <div class="view overlay">
+                        <canvas class="card-img-top" id="glcanvas8"></canvas>
+                        <a href="#!">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+
+                    <!-- Card content -->
+                    <div class="card-body">
+
+                        <!-- Title -->
+                        <h4 class="card-title">Card title</h4>
+                        <!-- Text -->
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <!-- Button -->
+                        <a href="sample8/index.html" class="btn btn-primary">Button</a>
+
+                    </div>
+
+                    <script src="./sample8/webgl-demo.js"></script>
+
+                </div>
+                <!-- Card -->
+            </div>
+
+        </div >
+    </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/js/mdb.min.js"></script>
 
 </body>
 </html>

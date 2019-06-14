@@ -1,12 +1,12 @@
 var cubeRotation = 0.0;
 
-main();
+main6();
 
 //
 // Start here
 //
-function main() {
-  const canvas = document.querySelector('#glcanvas');
+function main6() {
+  const canvas = document.querySelector('#glcanvas6');
   const gl = canvas.getContext('webgl');
 
   // If we don't have a GL context, give up now
