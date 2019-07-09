@@ -1,10 +1,10 @@
-main3();
+main();
 
 //
 // Start here
 //
-function main3() {
-  const canvas = document.querySelector('#glcanvas3');
+function main() {
+  const canvas = document.querySelector('#glcanvas');
   const gl = canvas.getContext('webgl');
 
   // If we don't have a GL context, give up now

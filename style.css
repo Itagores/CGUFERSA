@@ -1,0 +1,10 @@
+.newCard{
+    box-shadow: 2px 5px 4px #888888;
+    margin-top: 8px;
+}
+
+.newCard:hover{
+    transform: scale(1.1);
+    transition: 0.3s;
+
+}
