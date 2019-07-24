@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>CGUFERSA</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: #0a0a0a;">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+
+                    <h5 class="card-title">Malha de Polígonos</h5>
+
+                    <p class="card-text"> Como a maioria dos objetos em Computação Gráfica
+                        é representada através de uma malha de polígonos, logo abaixo é apresentada uma função
+                        que exemplifica o uso de uma malha de polígonos para fazer o desenho de um cubo.
+                    </p>
+
+                    <pre>void Desenha(void)
+{
+	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glColor3f(0.0f, 0.0f, 1.0f);
+	
+	// Desenha um cubo
+	
+	glBegin(GL_QUADS);			// Face posterior
+		glNormal3f(0.0, 0.0, 1.0);	// Normal da face
+		glVertex3f(40.0, 40.0, 40.0);
+		glVertex3f(-40.0, 40.0, 40.0);
+		glVertex3f(-40.0, -40.0, 40.0);
+		glVertex3f(40.0, -40.0, 40.0);
+	glEnd();
+	
+
+	glBegin(GL_QUADS);			// Face frontal
+		glNormal3f(0.0, 0.0, -1.0); 	// Normal da face
+		glVertex3f(40.0, 40.0, -40.0);
+		glVertex3f(40.0, -40.0, -40.0);
+		glVertex3f(-40.0, -40.0, -40.0);
+		glVertex3f(-40.0, 40.0, -40.0);
+	glEnd();
+	glBegin(GL_QUADS);			// Face lateral esquerda
+		glNormal3f(-1.0, 0.0, 0.0); 	// Normal da face
+		glVertex3f(-40.0, 40.0, 40.0);
+		glVertex3f(-40.0, 40.0, -40.0);
+		glVertex3f(-40.0, -40.0, -40.0);
+		glVertex3f(-40.0, -40.0, 40.0);
+	glEnd();
+	glBegin(GL_QUADS);			// Face lateral direita
+		glNormal3f(1.0, 0.0, 0.0);	// Normal da face
+		glVertex3f(40.0, 40.0, 40.0);
+		glVertex3f(40.0, -40.0, 40.0);
+		glVertex3f(40.0, -40.0, -40.0);
+		glVertex3f(40.0, 40.0, -40.0);
+	glEnd();
+	glBegin(GL_QUADS);			// Face superior
+		glNormal3f(0.0, 1.0, 0.0);  	// Normal da face
+		glVertex3f(-40.0, 40.0, -40.0);
+		glVertex3f(-40.0, 40.0, 40.0);
+		glVertex3f(40.0, 40.0, 40.0);
+		glVertex3f(40.0, 40.0, -40.0);
+	glEnd();
+	glBegin(GL_QUADS);			// Face inferior
+		glNormal3f(0.0, -1.0, 0.0); 	// Normal da face
+		glVertex3f(-40.0, -40.0, -40.0);
+		glVertex3f(40.0, -40.0, -40.0);
+		glVertex3f(40.0, -40.0, 40.0);
+		glVertex3f(-40.0, -40.0, 40.0);
+	glEnd();
+	glutSwapBuffers();
+}
+</pre>
+
+                    <p class="card-text"> Como a única alteração em relação ao exemplo do
+                        <a href="Iluminacao.html#Exemplo">capítulo anterior</a> é o desenho do cubo, só a função
+                        <i>Desenha</i> será descrita aqui.
+                    </p>
+
+                    <p class="card-text"> Quando se trabalha com uma malha, normalmente
+                        são passadas como argumento para a função <i>glBegin()</i> as primitivas GL_QUADS,
+                        GL_POLYGON
+                        e GL_TRIANGLES (<a href="LinhaPontoPolig.html">capítulo 9</a>). GL_TRIANGLE_STRIP e
+                        GL_QUAD_STRIP também podem ser usadas, desde que se tenha certeza de que os vértices
+                        e faces estão ordenados da maneira correta.
+                    </p>
+
+                    <p class="card-text"> Conforme se observa no código acima, é necessário
+                        informar o vetor normal normal de cada face, pois OpenGL usa esta informação para calcular
+                        a cor de cada face de acordo com os parâmetros de iluminação. A função usada para
+                        especificar
+                        o vetor normal é <i>glNormal3f</i>, e os seus parâmetros são as componentes x, y e z do
+                        vetor
+                        normal, respectivamente.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

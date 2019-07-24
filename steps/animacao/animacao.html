@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>CGUFERSA</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: #0a0a0a;">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+
+                    <h5 class="card-title">Animação</h5>
+
+                    <p class="card-title"> Para exemplificar como fazer uma animação, como
+                        por exemplo mover ou girar objetos, será retomado o exemplo do
+                        <a href="Desenhando.html">capítulo 8</a>, que desenha um quadrado numa janela com
+                        fundo preto. Agora, o quadrado será movido numa direção até bater em uma das bordas da janela
+                        e então mudar de direção.
+                    </p>
+
+                    <p class="card-title"> É possível criar um laço que continuamente altera
+                        as coordenadas do objeto antes de chamar a função "Desenha". Isto daria a impressão
+                        de que o quadrado se move na janela. Porém, a biblioteca GLUT fornece a possibilidade de
+                        registrar uma função <i>callback</i> que torna mais fácil o processo de fazer uma simples
+                        animação. A função <i>glutTimerFunc</i> pega o nome da função <i>callback</i> que deve ser
+                        chamada e o
+                        tempo que ela deve esperar antes de chamar a função. A seguir é apresentado o código do
+                        exemplo de animação, e na seqüência as novas funções utilizadas são descritas [Wright 2000].
+                    </p>
+
+                    <pre>
+#include &lt;windows.h&gt;
+#include &lt;gl/glut.h&gt;
+
+// Tamanho e posição inicial do quadrado
+GLfloat x1 = 100.0f;
+GLfloat y1 = 150.0f;
+GLsizei rsize = 50;                                                    
+
+// Tamanho do incremento nas direções x e y 
+// (número de pixels para se mover a cada
+// intervalo de tempo)
+GLfloat xstep = 1.0f;
+GLfloat ystep = 1.0f;
+
+// Largura e altura da janela
+GLfloat windowWidth;
+GLfloat windowHeight;
+
+
+// Função callback chamada para fazer o desenho
+void Desenha(void)
+{
+     glMatrixMode(GL_MODELVIEW);
+     glLoadIdentity();
+                   
+     // Limpa a janela de visualização com a cor de fundo especificada
+     glClear(GL_COLOR_BUFFER_BIT);
+
+     // Especifica que a cor corrente é vermelha
+     //         R     G     B
+     glColor3f(1.0f, 0.0f, 0.0f);
+  
+     // Desenha um quadrado preenchido com a cor corrente
+     glBegin(GL_QUADS);
+               glVertex2i(x1,y1+rsize); 
+               glVertex2i(x1,y1);
+               // Especifica que a cor corrente é azul
+               glColor3f(0.0f, 0.0f, 1.0f);
+               glVertex2i(x1+rsize,y1);
+               glVertex2i(x1+rsize,y1+rsize);               
+     glEnd();
+
+     // Executa os comandos OpenGL
+     glutSwapBuffers();
+}
+
+// Função callback chamada pela GLUT a cada intervalo de tempo
+// (a window não está sendo redimensionada ou movida)
+void Timer(int value)
+{
+    // Muda a direção quando chega na borda esquerda ou direita
+      if(x1 &gt; windowWidth-rsize || x1 &lt; 0)
+            xstep = -xstep;
+
+    // Muda a direção quando chega na borda superior ou inferior
+    if(y1 &gt; windowHeight-rsize || y1 &lt; 0)
+          ystep = -ystep;
+          
+    // Verifica as bordas.  Se a window for menor e o 
+    // quadrado sair do volume de visualização 
+   if(x1 &gt; windowWidth-rsize)
+         x1 = windowWidth-rsize-1;
+
+   if(y1 &gt; windowHeight-rsize)
+         y1 = windowHeight-rsize-1;
+
+    // Move o quadrado
+    x1 += xstep;
+    y1 += ystep;
+
+    // Redesenha o quadrado com as novas coordenadas 
+    glutPostRedisplay();
+    glutTimerFunc(33,Timer, 1);
+}
+
+// Inicializa parâmetros de rendering
+void Inicializa (void)
+{   
+    // Define a cor de fundo da janela de visualização como preta
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+}
+
+// Função callback chamada quando o tamanho da janela é alterado 
+void AlteraTamanhoJanela(GLsizei w, GLsizei h)
+{
+     // Evita a divisao por zero
+     if(h == 0) h = 1;
+                           
+     // Especifica as dimensões da Viewport
+     glViewport(0, 0, w, h);
+
+     // Inicializa o sistema de coordenadas
+     glMatrixMode(GL_PROJECTION);
+     glLoadIdentity();
+
+     // Estabelece a janela de seleção (left, right, bottom, top)     
+     if (w &lt;= h)  {
+		windowHeight = 250.0f*h/w;
+		windowWidth = 250.0f;
+     }
+     else  { 
+		windowWidth = 250.0f*w/h;
+		windowHeight = 250.0f;
+     }
+     
+     gluOrtho2D(0.0f, windowWidth, 0.0f, windowHeight);
+}
+
+// Programa Principal 
+int main(void)
+{
+     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+     glutInitWindowSize(400,350);
+     glutInitWindowPosition(10,10);
+     glutCreateWindow("Anima");
+     glutDisplayFunc(Desenha);
+     glutReshapeFunc(AlteraTamanhoJanela);
+     glutTimerFunc(33, Timer, 1);
+     Inicializa();
+     glutMainLoop();
+}
+</pre>
+
+
+                    <ul>
+
+                        <li><p class="card-title"><b><i>glutTimerFunc(33, Timer, 1);</i></b>
+                            estabelece a função <i>Timer</i> previamente definida como a função <i>callback</i>
+                            de animação. Seu protótipo é:
+                            <i>void glutTimerFunc(unsigned int msecs, void (*func)(int value), int value);</i>. Esta
+                            função faz a GLUT esperar <i>msecs</i> milisegundos antes de chamar a função <i>func</i>.
+                            É possível passar um valor definido pelo usuário no parâmetro <i>value</i>. Como esta função
+                            é "disparada" apenas uma vez, para se ter uma animação contínua é necessário reinicializar
+                            o <i>timer</i> novamente na função <i>Timer</i>.
+                        </p></li>
+
+                        <li><p class="card-title"><b><i>void Timer(int value)</i></b> é a função
+                            chamada pela <i>glutTimerFunc</i>. No exemplo, as variáveis utilizadas para determinar
+                            a posição do retângulo são atualizadas nesta função.
+                        </p></li>
+
+                    </ul>
+
+
+                    <p class="card-title"> Antes de prosseguir com a descrição das funções,
+                        é necessário explicar o funcionamento do <i>double-buffering</i>, que é uma das características
+                        mais importantes em qualquer pacote gráfico que está disponível na GLUT. <i>Double-buffering</i>
+                        permite que um desenho seja exibido na tela enquanto está sendo realizado o <i>rendering</i>
+                        em um <i>offscreen buffer</i>. Então, um comando de <i>swap</i> coloca a imagem na tela
+                        instantaneamente. Isto é útil, principalmente, por dois motivos: <br>
+                        - Alguns desenhos complexos podem levar um certo tempo para serem feitos, e não é desejado
+                        que cada passo da composição da imagem seja visível; então, é possível compor uma imagem e
+                        exibi-la somente depois de completa, de maneira que o usuário nunca vê uma imagem parcial,
+                        pois ela é exibida somente quando está pronta. <br>
+                        - No caso de uma animação, cada quadro (ou <i>frame</i>) é desenhado no <i>offscreen buffer</i>
+                        e é exibido (<i>swapped</i>) rapidamente depois de pronto.
+                    </p>
+
+
+                    <ul>
+
+                        <a name="glutSwapBuffers">
+                        </a>
+                        <li><a name="glutSwapBuffers"> </a>
+                            <p class="card-title"><a name="glutSwapBuffers"> <b><i>glutInitDisplayMode(GLUT_DOUBLE |
+                                GLUT_RGB)</i></b>,
+                                já </a><a href="PrimeiroPrograma.html#init">explicada anteriormente</a>, foi usada para
+                                trocar o
+                                modo de exibição de GLUT_SINGLE para GLUT_DOUBLE. Isto faz com que todo o
+                                <i>rendering</i>
+                                seja feito em um <i>offscreen buffer</i>.
+                            </p></li>
+
+                        <li><p class="card-title"><b><i>glutSwapBuffers();</i></b> é usada no lugar da
+                            <i>glFlush</i> porque quando é feita a troca (ou <i>swap</i>) de <i>buffers</i>, é realizada
+                            implicitamente uma operação de <i>flush</i>. Esta função continua fazendo o <i>flush</i>
+                            mesmo que o programa esteja sendo executado no modo <i>single-buffer</i>, porém com uma
+                            qualidade bastante inferior [Wright 2000].
+                        </p></li>
+
+                    </ul>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
