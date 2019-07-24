@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>CGUFERSA</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: #0a0a0a;">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+
+                        <h5 class="card-title">Linhas, Pontos e Polígonos</h5>
+
+                        <p class="card-text"> Com apenas algumas primitivas simples, tais como pontos,
+                            linhas e polígonos, é possível criar estruturas complexas. Em outras palavras,
+                            objetos e cenas criadas com OpenGL consistem em simples primitivas gráficas que podem ser
+                            combinadas de várias
+                            maneiras [Wright 2000]. Portanto, OpenGL fornece ferramentas para desenhar pontos, linhas e
+                            polígonos, que são formados por um
+                            ou mais vértices. Neste caso, é necessário passar uma lista de vértices, o que pode ser
+                            feito entre duas chamadas de funções OpenGL:
+                            <br> <i>
+                                glBegin() <br>
+                                glEnd()
+                            </i> <br>
+                            O argumento passado para <i>glBegin()</i> determina qual objeto será desenhado. No exemplo
+                            fornecido por [Hill 2000], para desenhar três pontos pretos foi usada a seguinte seqüência
+                            de comandos:
+                        </p>
+                        <pre>glBegin(GL_POINTS);
+	glColor3f(0.0f, 0.0f, 0.0f);
+	glVertex2i(100, 50);
+	glVertex2i(100, 130);
+	glVertex2i(150, 130);
+glEnd(); 
+</pre>
+                        <p></p>
+
+                        <p class="card-text"> Para desenhar outras primitivas, basta trocar
+                            <i>GL_POINTS</i>, que exibe um ponto para cada chamada ao comando <i>glVertex</i>, por: <br>
+                        </p>
+                        <ul>
+
+                            <li><p class="card-text"> GL_LINES: exibe uma linha a cada dois comandos
+                                <i>glVertex</i>; </p></li>
+
+                            <li><p class="card-text"> GL_LINE_STRIP: exibe uma seqüência de linhas conectando
+                                os pontos definidos por <i>glVertex</i>;</p></li>
+
+                            <li><p class="card-text"> GL_LINE_LOOP: exibe uma seqüência de linhas conectando
+                                os pontos definidos por <i>glVertex</i> e ao final liga o primeiro como último ponto;
+                            </p></li>
+
+                            <li><p class="card-text"> GL_POLYGON: exibe um polígono convexo preenchido,
+                                definido por uma seqüência de chamadas a <i>glVertex</i>;</p></li>
+
+                            <li><p class="card-text"> GL_TRIANGLES: exibe um triângulo preenchido a cada três
+                                pontos definidos por <i>glVertex</i>;</p></li>
+
+                            <li><p class="card-text"> GL_TRIANGLE_STRIP: exibe uma seqüência de triângulos
+                                baseados no trio de vértices v0, v1, v2, depois, v2, v1, v3, depois, v2, v3, v4 e assim
+                                por
+                                diante;</p></li>
+
+                            <li><p class="card-text"> GL_TRIANGLE_FAN: exibe uma seqüência de triângulos
+                                conectados baseados no trio de vértices v0, v1, v2, depois, v0, v2, v3, depois, v0, v3,
+                                v4 e
+                                assim por diante;</p></li>
+
+                            <li><p class="card-text"> GL_QUADS: exibe um quadrado preenchido conectando cada
+                                quatro pontos definidos por <i>glVertex</i>;</p></li>
+
+                            <li><p class="card-text"> GL_QUAD_STRIP: exibe uma seqüência de quadriláteros
+                                conectados a cada quatro vértices; primeiro v0, v1, v3, v2, depois, v2, v3, v5, v4,
+                                depois,
+                                v4, v5, v7, v6, e assim por diante [Hill 2000, Pinho 2000].</p></li>
+
+                        </ul>
+
+                        <p class="card-text"> A função <i>glVertex2i</i> pertence à biblioteca GL e
+                            possui dois argumentos inteiros. De maneira análoga, conforme explicado no <a
+                                    href="NomesFuncoes.html">capítulo 4</a>,
+                            também é possível passar valores de ponto flutuante no lugar de inteiros,
+                            e três coordenadas (x,y,z) no lugar de duas usando, por exemplo, as seguintes chamadas às
+                            funções OpenGL:
+                            <br><i>glVertex2d(100.0, 50.0);</i>
+                            <br><i>glVertex3f(50.0, 50.0, 50.0);</i>
+                            Além disso, para cada vértice é possível definir uma cor diferente. Neste caso, no desenho
+                            final é feita uma "interpolação" das cores,
+                            como mostra o exemplo da <a href="Desenhando.html#figura8">figura 8.1</a>.</p>
+
+                        <p class="card-text"> Para ilustrar a diferença na utilização de algumas primitivas gráficas o
+                            código apresentado no capítulo 8
+                            foi alterado da seguinte maneira: inicialmente, os parâmetros passados para a função <i>glutInitWindowSize</i>
+                            foram alterados para
+                            (200,200), para diminuir o tamanho da janela GLUT; depois, antes da função <i>glBegin(GL_QUADS)</i>
+                            foram chamadas as funções
+                            <i>glPointSize(3)</i> e <i>glLineWidth(3)</i>; finalmente, GL_QUADS, foi substituído por
+                            GL_POINTS, GL_LINES, GL_LINE_STRIP
+                            e GL_LINE_LOOP, gerando as imagens apresentadas na figura 9.1.
+                        </p>
+
+                        <b><p align="center"><img src="Figura9.1.png"></p>
+                        </b>
+                        <p align="CENTER"><strong>Figura 9.1 - Imagens geradas com a utilização de (a) GL_POINTS, (b)
+                            GL_LINES, (c) GL_LINE_STRIP e (d) GL_LINE_LOOP</strong></p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>CGUFERSA</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: #0a0a0a;">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Primeiros Passos</h5>
+                    <p class="card-text"> OpenGL é definida como "um programa de interface para <i>hardware</i> gráfico". Na verdade, OpenGL é uma biblioteca de rotinas gráficas e de
+                        modelagem, bi (2D) e tridimensional (3D),  extremamente portável e rápida. Usando OpenGL é possível criar gráficos
+                        3D com uma qualidade visual próxima de um <i>ray tracer</i>. Entretanto, a maior vantagem na sua
+                        utilização é a rapidez, uma vez que usa algoritmos cuidadosamente desenvolvidos e otimizados
+                        pela <i>Silicon Graphics, Inc.</i>, líder mundial em Computação Gráfica e Animação.
+                    </p>
+
+                    <p class="card-text"> OpenGL não é uma linguagem de programação, é uma
+                        poderosa e sofisticada API (<i>Application Programming Interface</i>) para criação de
+                        aplicações gráficas 2D e 3D. Seu funcionamento é semelhante ao de uma
+                        biblioteca C, uma vez que fornece uma série de funcionalidades. Normalmente se diz que um
+                        programa é baseado em OpenGL ou é uma aplicação OpenGL, o que significa que ele é escrito
+                        em alguma linguagem de programação que faz chamadas a uma ou mais bibliotecas OpenGL.
+                    </p>
+
+                    <p class="card-text"> As aplicações OpenGL variam de ferramentas CAD a
+                        programas de modelagem usados para criar personagens para o cinema, tal como um dinossauro. Além do desenho de
+                        primitivas gráficas, tais como linhas e polígonos, OpenGL dá suporte a iluminação, colorização,
+                        mapeamento de textura, transparência, animação, entre muitos outros efeitos especiais. Atualmente, OpenGL é reconhecida e
+                        aceita como um padrão API para desenvolvimento
+                        de aplicações gráficas 3D em tempo real.
+                    </p>
+
+                    <p class="card-text"> Ao invés de descrever a cena e como ela deve parecer,
+                        quando se está utilizando OpenGL é preciso apenas determinar os passos necessários para
+                        alcançar a aparência ou efeito desejado. Estes passos envolvem chamadas a esta API portável
+                        que inclui aproximadamente 250 comandos e funções (200 comandos do <i>core</i> OpenGL e 50 da
+                        <a href="bibliotecas.html#glu">GLU</a> - <i>OpenGL Utility Library</i>).
+                        Por ser portável, OpenGL não possui funções para gerenciamento de janelas, interação com o usuário ou arquivos de entrada/saída.
+                        Cada ambiente, como por exemplo o <i>Microsoft Windows</i>,
+                        possui suas próprias funções para estes propósitos. Não existe um formato de arquivo
+                        OpenGL para modelos ou ambientes virtuais. OpenGL fornece um pequeno conjunto de primitivas
+                        gráficas para construção de modelos, tais como pontos, linhas e polígonos. A biblioteca GLU (que faz parte
+                        da implementação OpenGL) é que fornece várias funções para modelagem, tais como superfícies quádricas,
+                        e curvas e superfícies NURBS (<i>Non Uniform Rational B-Splines</i>) [Woo 1999, Wright 2000].
+                    </p>
+
+
+                    <p class="card-text"> A palavra <i>pipeline</i> é usada para descrever um
+                        processo que pode ter dois ou mais passos distintos. A figura 2.1 mostra uma versão simplificada
+                        do <i>pipeline</i> OpenGL. Como uma aplicação faz chamadas às funções API OpenGL, os comandos
+                        são colocados em um <i>buffer</i> de comandos. Este <i>buffer</i> é preenchido com comandos,
+                        vértices, dados de textura, etc. Quando este <i>buffer</i> é "esvaziado", os comandos e dados
+                        são passados para o próximo estágio.
+                    </p>
+
+                    <b><p align="center"><img src="pipeline.jpg"></p>
+                    </b><p align="CENTER"><strong>Figura 1.1 - Versão simplificada do <i>pipeline</i> OpenGL</strong></p>
+
+
+                    <p class="card-text"> Após a etapa de aplicação das transformações geométricas
+                        e da iluminação, é feita a rasterização, isto é, é gerada a imagem a partir dos dados geométricos,
+                        de cor e textura. A imagem final, então, é colocada no <i>frame buffer</i>, que é a memória
+                        do dispositivo gráfico. Isto significa que a imagem é exibida no monitor [Wright 2000].
+                    </p>
+
+                    <h5 class="card-title">Tipos de Dados</h5>
+
+
+                    <p class="card-text"> Para tornar o código portável, foram definidos tipos de dados próprios para OpenGL.
+                        Estes tipos de dados são mapeados dos tipos de dados C comuns, que também podem ser utilizados. Como
+                        os vários compiladores e ambientes possuem regras diferentes para determinar o tamanho das variáveis C, usando os tipos OpenGL é
+                        possível “isolar” o código das aplicações destas alterações.
+                    </p>
+
+                    <p class="card-text"> Na tabela 3.1, definida tanto por [Woo 1999], como por [Wright 2000], são apresentados
+                        os tipos de dados OpenGL, os tipos de dados C correspondentes e o sufixo apropriado. Estes sufixos são
+                        usados para especificar os tipos de dados para as implementações ISO C de OpenGL.
+                        Pode-se observar que todos os tipos começam "GL", e a maioria é seguido pelo tipo de dado
+                        C correspondente.
+                    </p>
+
+                    <center><table border="" cols="4" width="90%">
+                        <tbody><tr>
+                            <td>
+                                <center><b>Tipo de dado OpenGL</b></center>
+                            </td>
+
+                            <td>
+                                <center><b>Representação interna</b></center>
+                            </td>
+
+                            <td>
+                                <center><b>Tipo de dado C equivalente&nbsp;</b></center>
+                            </td>
+
+                            <td>
+                                <center><b>Sufixo</b></center>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>GLbyte</td>
+                            <td>8-bit integer</td>
+                            <td>signed char</td>
+                            <td>b</td>
+                        </tr>
+
+                        <tr>
+                            <td>GLshort</td>
+                            <td>16-bit integer</td>
+                            <td>short</td>
+                            <td>s</td>
+                        </tr>
+
+                        <tr>
+                            <td>GLint, GLsizei</td>
+                            <td>32-bit integer</td>
+                            <td>int ou long</td>
+                            <td>i</td>
+                        </tr>
+
+                        <tr>
+                            <td>GLfloat, GLclampf</td>
+                            <td>32-bit floating-point</td>
+                            <td>float</td>
+                            <td>f</td>
+                        </tr>
+
+                        <tr>
+                            <td>GLdouble, GLclampd</td>
+                            <td>64-bit floating-point</td>
+                            <td>double</td>
+                            <td>d</td>
+                        </tr>
+
+                        <tr>
+                            <td>GLubyte, GLboolean</td>
+                            <td>8-bit unsigned integer</td>
+                            <td>unsigned char</td>
+                            <td>ub</td>
+                        </tr>
+
+                        <tr>
+                            <td>GLushort</td>
+                            <td>16-bit unsigned integer</td>
+                            <td>unsigned short</td>
+                            <td>us</td>
+                        </tr>
+
+                        <tr>
+                            <td>GLuint, GLenum, GLbitfield</td>
+                            <td>32-bit unsigned integer</td>
+                            <td>unsigned long ou unsigned int</td>
+                            <td>ui</td>
+                        </tr>
+
+                        </tbody></table></center>
+
+
+
+                    <p align="CENTER"><strong>Tabela 3.1 - Tipos de dados OpenGL</strong></p>
+
+                    <h5 class="card-title">Convenções para os Nomes das Funções</h5>
+
+                    <p class="card-text"> Todos os nomes das funções OpenGL seguem uma convenção
+                        que indica de qual biblioteca a função faz parte e, freqüentemente, quantos e que tipos
+                        de argumentos a função tem. Todas as funções possuem uma raiz que representa os comandos OpenGL
+                        que correspondem às funções. Por exemplo, a função <i>glColor3f</i> possui <i>Color</i> como
+                        raiz. O prefixo <i>gl</i> representa a biblioteca <i>gl</i>, e o sufixo <i>3f</i> significa
+                        que a função possui três valores de ponto flutuante como parâmetro. Resumindo, todas as funções OpenGL
+                        possuem o seguinte formato: </p>
+
+                    <p align="CENTER"><i><b>
+                        &lt;PrefixoBiblioteca&gt; &lt;ComandoRaiz&gt; &lt;ContadorArgumentosOpcional&gt; &lt;TipoArgumentosOpcional&gt;
+                    </b></i></p>
+
+                    <p class="card-text">Variações da função do exemplo anterior, <i>glColor3f</i>,
+                        podem receber três valores inteiros como parâmetro (<i>glColor3i</i>), três <i>doubles</i>
+                        (<i>glColor3d</i>) e assim por diante. Algumas versões da <i>glColor</i> também recebem quatro
+                        argumentos. Neste caso, um dos argumentos é usado para especificar o componente alfa (transparência).
+                        Esta convenção de adicionar o número e o tipo dos argumentos facilita a memorização da lista de argumentos.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

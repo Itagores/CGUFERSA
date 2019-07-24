@@ -1,10 +1,19 @@
 .newCard{
     box-shadow: 2px 5px 4px #888888;
     margin-top: 8px;
+    transition: 0.3s;
 }
 
 .newCard:hover{
     transform: scale(1.1);
-    transition: 0.3s;
+    cursor: pointer;
+}
 
+.link{
+    color: #0a0a0a;
+}
+
+.link:hover{
+    color: #0a0a0a;
+    text-decoration: none;
 }
