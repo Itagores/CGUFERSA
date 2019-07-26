@@ -10,10 +10,12 @@
 </head>
 <body style="background-color: #0a0a0a;">
 <div class="container">
+
     <div class="row justify-content-center">
         <div class="col">
             <div class="card">
                 <div class="card-body">
+
                     <h5 class="card-title">Primeiro Programa</h5>
 
                     <p class="card-text"> Para entender o funcionamento da GLUT, logo abaixo
@@ -183,6 +185,46 @@ int main(void)
                             </p></li>
                         </a>
                     </ul>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <h5 class="card-title">Veja um exemplo</h5>
+                            <div class="btn btn-primary btn-block" onclick="main()">START</div>
+                        </div>
+                        <div class="col">
+                            <canvas id="glcanvas" width="640" height="480"></canvas>
+                        </div>
+                    </div>
+
+                    <script>
+                        //main();
+
+                        //
+                        // start here
+                        //
+                        function main() {
+                            const canvas = document.querySelector("#glcanvas");
+                            // Initialize the GL context
+                            const gl = canvas.getContext("webgl");
+
+                            // Only continue if WebGL is available and working
+                            if (!gl) {
+                                alert("Unable to initialize WebGL. Your browser or machine may not support it.");
+                                return;
+                            }
+
+                            // Set clear color to black, fully opaque
+                            gl.clearColor(0.0, 0.0, 0.0, 1.0);
+                            // Clear the color buffer with specified clear color
+                            gl.clear(gl.COLOR_BUFFER_BIT);
+                        }
+                    </script>
+
+                    <div class="row justify-content-center">
+                        <a href="../primeiros_passos/primeiros_passos.html" class="btn btn-outline-dark">Anterior</a>
+                        <a href="../../index.html" class="btn btn-outline-dark ml-2 mr-2">Home</a>
+                        <a href="../desenhando_primitivas/desenhando_primitivas.html" class="btn btn-outline-dark">Próximo</a>
+                    </div>
 
 
                 </div>
