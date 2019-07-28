@@ -6,7 +6,8 @@
     <title>CGUFERSA</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body style="background-color: #0a0a0a;">
 <div class="container">
@@ -111,6 +112,47 @@ glEnd();
                         <p align="CENTER"><strong>Figura 9.1 - Imagens geradas com a utilização de (a) GL_POINTS, (b)
                             GL_LINES, (c) GL_LINE_STRIP e (d) GL_LINE_LOOP</strong></p>
 
+                    <div class="row mb-3">
+                        <div class="col">
+                            <h5 class="card-title">Veja um exemplo</h5>
+                            <div class="">
+                                <p>red: <strong id="red">0.5</strong></p>
+                                <div id="sliderR"></div>
+                            </div>
+                            <div class="">
+                                <p>green: <strong id="green">0.5</strong></p>
+                                <div id="sliderG"></div>
+                            </div>
+                            <div class="">
+                                <p>blue: <strong id="blue">0.5</strong></p>
+                                <div id="sliderB"></div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label>Selecione o objeto.</label>
+                                <select class="form-control" id="objeto" onchange="main()">
+                                    <option value="1">GL_POINTS</option>
+                                    <option value="2">GL_LINES</option>
+                                    <option value="3">GL_LINE_STRIP</option>
+                                    <option value="4">GL_LINE_LOOP</option>
+                                    <option value="6">GL_TRIANGLES</option>
+                                    <option value="7">GL_TRIANGLE_FAN</option>
+                                </select>
+                            </div>
+                            <div class="mt-3 btn btn-primary btn-block" onclick="main()">START</div>
+                        </div>
+                        <div class="col">
+                            <canvas class="mt-3" id="glcanvas" width="640" height="480"></canvas>
+                        </div>
+                    </div>
+
+                    <script src="../../gl-matrix.js"></script>
+                    <script src="./linhas_pontos_poligonos.js"></script>
+
+                    <div class="row justify-content-center">
+                        <a href="../desenhando_primitivas/desenhando_primitivas.html" class="btn btn-outline-dark">Anterior</a>
+                        <a href="../../index.html" class="btn btn-outline-dark ml-2 mr-2">Home</a>
+                        <a href="../transformacoes_geometricas/transformacoes_geometricas.html" class="btn btn-outline-dark">Próximo</a>
+                    </div>
 
                 </div>
             </div>
@@ -118,14 +160,50 @@ glEnd();
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<script>
+    $( function() {
+        $( "#sliderR" ).slider({
+            max:1,
+            value:0.5,
+            step:0.01,
+            change: function( event, ui ) {
+                document.getElementById('red').innerText = ui.value;
+                red = ui.value;
+                main();
+            }
+        });
+        $( "#sliderG" ).slider({
+            max:1,
+            value:0.5,
+            step:0.01,
+            change: function( event, ui ) {
+                document.getElementById('green').innerText = ui.value;
+                green = ui.value;
+                main();
+            }
+        });
+        $( "#sliderB" ).slider({
+            max:1,
+            value:0.5,
+            step:0.01,
+            change: function( event, ui ) {
+                document.getElementById('blue').innerText = ui.value;
+                blue = ui.value;
+                main();
+            }
+        });
+    } );
+</script>
+
 </body>
 </html>

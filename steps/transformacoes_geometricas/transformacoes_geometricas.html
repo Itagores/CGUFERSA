@@ -6,7 +6,9 @@
     <title>CGUFERSA</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 </head>
 <body style="background-color: #0a0a0a;">
 <div class="container">
@@ -98,6 +100,370 @@
                     <p align="CENTER"><strong>Figura 10.1 - Saída do programa <a href="Desenhando.html#Quadrado">Quadrado.c</a>
                         após a alteração da função "Desenha"</strong></p>
 
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <h5 class="card-title">Translação</h5>
+                            <canvas width="300" height="300" id="my_Canvas"></canvas>
+                            <div class="mt-3">
+                                <p>X: <strong id="transX">0.0</strong></p>
+                                <div id="sliderTransX"></div>
+                            </div>
+                            <div class="mt-3">
+                                <p>Y: <strong id="transY">0.0</strong></p>
+                                <div id="sliderTransY"></div>
+                            </div>
+                            <script>
+
+                                //translacao();
+
+                                var transX = 0;
+                                var transY = 0;
+
+                                function translacao() {
+                                    /*=================Creating a canvas=========================*/
+                                    var canvas = document.getElementById('my_Canvas');
+                                    gl = canvas.getContext('experimental-webgl');
+
+                                    /*===========Defining and storing the geometry==============*/
+                                    var vertices = [
+                                        -0.5, 0.5, 0.0,
+                                        -0.5, -0.5, 0.0,
+                                        0.5, -0.5, 0.0,
+                                    ];
+
+                                    //Create an empty buffer object and store vertex data
+                                    var vertex_buffer = gl.createBuffer();
+
+                                    //Create a new buffer
+                                    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+
+                                    //bind it to the current buffer
+                                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+
+                                    // Pass the buffer data
+                                    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+
+                                    /*========================Shaders============================*/
+
+                                    //vertex shader source code
+                                    var vertCode =
+                                        'attribute vec4 coordinates;' +
+                                        'uniform vec4 translation;' +
+                                        'void main(void) {' +
+                                        '  gl_Position = coordinates + translation;' +
+                                        '}';
+
+                                    //Create a vertex shader program object and compile it
+                                    var vertShader = gl.createShader(gl.VERTEX_SHADER);
+                                    gl.shaderSource(vertShader, vertCode);
+                                    gl.compileShader(vertShader);
+
+
+                                    //fragment shader source code
+                                    var fragCode =
+                                        'void main(void) {' +
+                                        '   gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);' +
+                                        '}';
+
+                                    //Create a fragment shader program object and compile it
+                                    var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+                                    gl.shaderSource(fragShader, fragCode);
+                                    gl.compileShader(fragShader);
+
+                                    //Create and use combiened shader program
+                                    var shaderProgram = gl.createProgram();
+                                    gl.attachShader(shaderProgram, vertShader);
+                                    gl.attachShader(shaderProgram, fragShader);
+                                    gl.linkProgram(shaderProgram);
+
+                                    gl.useProgram(shaderProgram);
+
+                                    /* ===========Associating shaders to buffer objects============*/
+
+                                    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+                                    var coordinatesVar = gl.getAttribLocation(shaderProgram, "coordinates");
+                                    gl.vertexAttribPointer(coordinatesVar, 3, gl.FLOAT, false, 0, 0);
+                                    gl.enableVertexAttribArray(coordinatesVar);
+
+                                    /* ==========translation======================================*/
+                                    var /*Tx = 0.1, Ty = 0.0,*/ Tz = 0.0;
+                                    var translation = gl.getUniformLocation(shaderProgram, 'translation');
+                                    gl.uniform4f(translation, transX, transY, Tz, 0.0);
+
+                                    /*=================Drawing the riangle and transforming it========================*/
+
+                                    gl.clearColor(0.0, 0.0, 0.0, 1);
+                                    gl.enable(gl.DEPTH_TEST);
+
+                                    gl.clear(gl.COLOR_BUFFER_BIT);
+                                    gl.viewport(0, 0, canvas.width, canvas.height);
+                                    gl.drawArrays(gl.TRIANGLES, 0, 3);
+                                }
+                            </script>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <h5 class="card-title">Rotação</h5>
+                            <canvas width="300" height="300" id="my_Canvas1"></canvas>
+                            <div class="mt-3">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-secondary active">
+                                        <input type="radio" name="options" id="option1" autocomplete="off" onchange="rotacao(-1)"> Horário
+                                    </label>
+                                    <label class="btn btn-secondary">
+                                        <input type="radio" name="options" id="option2" autocomplete="off" checked onchange="rotacao(1)"> Anti-Horário
+                                    </label>
+                                </div>
+                            </div>
+                            <script>
+
+                                //rotacao(-1);
+                                function rotacao(val) {
+
+                                    /*=================Creating a canvas=========================*/
+                                    var canvas = document.getElementById('my_Canvas1');
+                                    gl = canvas.getContext('experimental-webgl');
+
+                                    /*===========Defining and storing the geometry==============*/
+
+                                    var vertices = [-1, -1, -1, 1, -1, -1, 1, 1, -1];
+                                    var colors = [1, 1, 1, 1, 1, 1, 1, 1, 1];
+                                    var indices = [0, 1, 2];
+
+                                    //Create and store data into vertex buffer
+                                    var vertex_buffer = gl.createBuffer();
+                                    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+                                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+
+                                    //Create and store data into color buffer
+                                    var color_buffer = gl.createBuffer();
+                                    gl.bindBuffer(gl.ARRAY_BUFFER, color_buffer);
+                                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+
+                                    //Create and store data into index buffer
+                                    var index_buffer = gl.createBuffer();
+                                    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
+                                    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+
+                                    /*==========================Shaders=========================*/
+
+                                    var vertCode = 'attribute vec3 position;' +
+                                        'uniform mat4 Pmatrix;' +
+                                        'uniform mat4 Vmatrix;' +
+                                        'uniform mat4 Mmatrix;' +
+                                        'attribute vec3 color;' +//the color of the point
+                                        'varying vec3 vColor;' +
+
+                                        'void main(void) { ' +//pre-built function
+                                        'gl_Position = Pmatrix*Vmatrix*Mmatrix*vec4(position, 1.);' +
+                                        'vColor = color;' +
+                                        '}';
+
+                                    var fragCode = 'precision mediump float;' +
+                                        'varying vec3 vColor;' +
+                                        'void main(void) {' +
+                                        'gl_FragColor = vec4(vColor, 1.);' +
+                                        '}';
+
+                                    var vertShader = gl.createShader(gl.VERTEX_SHADER);
+                                    gl.shaderSource(vertShader, vertCode);
+                                    gl.compileShader(vertShader);
+
+                                    var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+                                    gl.shaderSource(fragShader, fragCode);
+                                    gl.compileShader(fragShader);
+
+                                    var shaderProgram = gl.createProgram();
+                                    gl.attachShader(shaderProgram, vertShader);
+                                    gl.attachShader(shaderProgram, fragShader);
+                                    gl.linkProgram(shaderProgram);
+
+                                    /*===========associating attributes to vertex shader ============*/
+
+                                    gl.useProgram(shaderProgram);
+                                    var Pmatrix = gl.getUniformLocation(shaderProgram, "Pmatrix");
+                                    var Vmatrix = gl.getUniformLocation(shaderProgram, "Vmatrix");
+                                    var Mmatrix = gl.getUniformLocation(shaderProgram, "Mmatrix");
+
+                                    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+                                    var position = gl.getAttribLocation(shaderProgram, "position");
+                                    gl.vertexAttribPointer(position, 3, gl.FLOAT, false, 0, 0); //position
+                                    gl.enableVertexAttribArray(position);
+
+                                    gl.bindBuffer(gl.ARRAY_BUFFER, color_buffer);
+                                    var color = gl.getAttribLocation(shaderProgram, "color");
+                                    gl.vertexAttribPointer(color, 3, gl.FLOAT, false, 0, 0); //color
+                                    gl.enableVertexAttribArray(color);
+
+                                    /*========================= MATRIX ========================= */
+
+                                    function get_projection(angle, a, zMin, zMax) {
+                                        var ang = Math.tan((angle * .5) * Math.PI / 180);//angle*.5
+                                        return [
+                                            0.5 / ang, 0, 0, 0,
+                                            0, 0.5 * a / ang, 0, 0,
+                                            0, 0, -(zMax + zMin) / (zMax - zMin), -1,
+                                            0, 0, (-2 * zMax * zMin) / (zMax - zMin), 0
+                                        ];
+                                    }
+
+                                    var proj_matrix = get_projection(40, canvas.width / canvas.height, 1, 100);
+                                    var mov_matrix = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+                                    var view_matrix = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+
+                                    //translating z
+                                    view_matrix[14] = view_matrix[14] - 6; //zoom
+
+                                    /*=======================rotation========================*/
+                                    function rotateZ(m, angle) {
+                                        var c = Math.cos(angle);
+                                        var s = Math.sin(angle);
+                                        var mv0 = m[0], mv4 = m[4], mv8 = m[8];
+
+                                        m[0] = c * m[0] - s * m[1];
+                                        m[4] = c * m[4] - s * m[5];
+                                        m[8] = c * m[8] - s * m[9];
+                                        m[1] = c * m[1] + s * mv0;
+                                        m[5] = c * m[5] + s * mv4;
+                                        m[9] = c * m[9] + s * mv8;
+                                    }
+
+                                    /*=================Drawing===========================*/
+
+                                    var time_old = 0;
+                                    var animate = function (time) {
+                                        var dt = time - time_old;
+                                        rotateZ(mov_matrix, dt * 0.002 * val);
+                                        time_old = time;
+
+                                        gl.enable(gl.DEPTH_TEST);
+                                        gl.depthFunc(gl.LEQUAL);
+                                        gl.clearColor(0.0, 0.0, 0.0, 1);
+                                        gl.clearDepth(1.0);
+                                        gl.viewport(0.0, 0.0, canvas.width, canvas.height);
+                                        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+                                        gl.uniformMatrix4fv(Pmatrix, false, proj_matrix);
+                                        gl.uniformMatrix4fv(Vmatrix, false, view_matrix);
+                                        gl.uniformMatrix4fv(Mmatrix, false, mov_matrix);
+
+                                        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
+                                        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+                                        window.requestAnimationFrame(animate);
+                                    };
+                                    animate(0);
+                                }
+                            </script>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <h5 class="card-title">Escala</h5>
+                            <canvas width="300" height="300" id="my_Canvas2"></canvas>
+                            <div class="mt-3">
+                                <p>X: <strong id="escX">1</strong></p>
+                                <div id="sliderEscX"></div>
+                            </div>
+                            <div class="mt-3">
+                                <p>Y: <strong id="escY">1</strong></p>
+                                <div id="sliderEscY"></div>
+                            </div>
+                            <script>
+
+                                escala();
+
+                                var escX = 1;
+                                var escY = 1;
+
+                                function escala() {
+
+                                    /*=================Creating a canvas=========================*/
+                                    var canvas = document.getElementById('my_Canvas2');
+                                    gl = canvas.getContext('experimental-webgl');
+
+                                    /*===========Defining and storing the geometry==============*/
+                                    var vertices = [
+                                        -0.5, 0.5, 0.0,
+                                        -0.5, -0.5, 0.0,
+                                        0.5, -0.5, 0.0,
+                                    ];
+
+                                    //Create an empty buffer object and store vertex data
+
+                                    var vertex_buffer = gl.createBuffer();
+                                    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+                                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+                                    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+
+                                    /*========================Shaders============================*/
+
+                                    //Vertex shader source code
+                                    var vertCode =
+                                        'attribute vec4 coordinates;' +
+                                        'uniform mat4 u_xformMatrix;' +
+                                        'void main(void) {' +
+                                        '  gl_Position = u_xformMatrix * coordinates;' +
+                                        '}';
+
+                                    //Create a vertex shader program object and compile it
+                                    var vertShader = gl.createShader(gl.VERTEX_SHADER);
+                                    gl.shaderSource(vertShader, vertCode);
+                                    gl.compileShader(vertShader);
+
+                                    //fragment shader source code
+                                    var fragCode =
+                                        'void main(void) {' +
+                                        '   gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);' +
+                                        '}';
+
+                                    //Create a fragment shader program object and compile it
+                                    var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+                                    gl.shaderSource(fragShader, fragCode);
+                                    gl.compileShader(fragShader);
+
+                                    //Create and use combiened shader program
+                                    var shaderProgram = gl.createProgram();
+                                    gl.attachShader(shaderProgram, vertShader);
+                                    gl.attachShader(shaderProgram, fragShader);
+                                    gl.linkProgram(shaderProgram);
+
+                                    gl.useProgram(shaderProgram);
+
+                                    /*===================scaling==========================*/
+
+                                    var /*Sx = 1.0, Sy = 1.5,*/ Sz = 1.0;
+                                    var xformMatrix = new Float32Array([
+                                        escX, 0.0, 0.0, 0.0,
+                                        0.0, escY, 0.0, 0.0,
+                                        0.0, 0.0, Sz, 0.0,
+                                        0.0, 0.0, 0.0, 1.0
+                                    ]);
+
+                                    var u_xformMatrix = gl.getUniformLocation(shaderProgram, 'u_xformMatrix');
+                                    gl.uniformMatrix4fv(u_xformMatrix, false, xformMatrix);
+
+                                    /* ===========Associating shaders to buffer objects============*/
+                                    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+
+                                    var coordinatesVar = gl.getAttribLocation(shaderProgram, "coordinates");
+                                    gl.vertexAttribPointer(coordinatesVar, 3, gl.FLOAT, false, 0, 0);
+                                    gl.enableVertexAttribArray(coordinatesVar);
+
+                                    /*=================Drawing the Quad========================*/
+                                    gl.clearColor(0.0, 0.0, 0.0, 1);
+                                    gl.enable(gl.DEPTH_TEST);
+
+                                    gl.clear(gl.COLOR_BUFFER_BIT);
+                                    gl.viewport(0, 0, canvas.width, canvas.height);
+                                    gl.drawArrays(gl.TRIANGLES, 0, 3);
+                                }
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center mt-4">
+                        <a href="../linhas_pontos_poligonos/linhas_pontos_poligonos.html" class="btn btn-outline-dark">Anterior</a>
+                        <a href="../../index.html" class="btn btn-outline-dark ml-2 mr-2">Home</a>
+                        <a href="../animacao/animacao.html" class="btn btn-outline-dark">Próximo</a>
+                    </div>
+
 
                 </div>
             </div>
@@ -105,14 +471,62 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+    $("#sliderTransX").slider({
+        max: 1,
+        min: -1,
+        value: 0.0,
+        step: 0.01,
+        change: function (event, ui) {
+            document.getElementById('transX').innerText = ui.value;
+            transX = ui.value;
+            translacao();
+        }
+    });
+    $("#sliderTransY").slider({
+        max: 1,
+        min: -1,
+        value: 0.0,
+        step: 0.01,
+        change: function (event, ui) {
+            document.getElementById('transY').innerText = ui.value;
+            escY = ui.value;
+            translacao();
+        }
+    });
+
+    $("#sliderEscX").slider({
+        max: 2,
+        min: 1,
+        value: 1,
+        step: 0.01,
+        change: function (event, ui) {
+            document.getElementById('escX').innerText = ui.value;
+            escX = ui.value;
+            escala();
+        }
+    });
+    $("#sliderEscY").slider({
+        max: 2,
+        min: 1,
+        value: 1,
+        step: 0.01,
+        change: function (event, ui) {
+            document.getElementById('escY').innerText = ui.value;
+            escY = ui.value;
+            escala();
+        }
+    });
+</script>
+
 </body>
 </html>

@@ -3,6 +3,10 @@
 //
 // Start here
 //
+
+var red = 0.5;
+var green = 0.5;
+var blue = 0.5;
 function main() {
   const canvas = document.querySelector('#glcanvas');
   const gl = canvas.getContext('webgl');
@@ -31,7 +35,7 @@ function main() {
 
   const fsSource = `
     void main() {
-      gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+      gl_FragColor = vec4(`+red+`,`+green+`,`+blue+`, 1.0);
     }
   `;
 
