@@ -1,259 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>three.js webgl - PLY</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
-	</head>
-	<body>
+<head>
+    <title>three.js webgl - PLY</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="main.css">
+</head>
+<body>
 
-		<script src="./build/three.js"></script>
-		<script src="./js/libs/stats.min.js"></script>
-		<script src="./js/loaders/PLYLoader.js"></script>
+<script src="./build/three.js"></script>
+<script src="./js/libs/stats.min.js"></script>
+<script src="./js/loaders/PLYLoader.js"></script>
 
-		<script>
+<div style="position: absolute;margin: 16px;">
+    <select onchange="init(this.value);animate()">
+        <option value="airplane">airplane</option>
+        <option value="ant">ant</option>
+        <option value="apple">apple</option>
+        <option value="beethoven">beethoven</option>
+        <option value="dolphins">dolphins</option>
+    </select>
+</div>
 
-			var container, stats;
+<script>
 
-			var camera, cameraTarget, scene, renderer;
+    var container, stats;
 
-			init();
-			animate();
+    var camera, cameraTarget, scene, renderer;
 
-			function init() {
+    init('dolphins');
+    animate();
 
-				container = document.createElement( 'div' );
-				document.body.appendChild( container );
+    function init(val) {
 
-				camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 15 );
-				camera.position.set( 3, 0.15, 3 );
+        container = document.createElement('div');
+        document.body.appendChild(container);
 
-				cameraTarget = new THREE.Vector3( 0, - 0.1, 0 );
+        camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 15);
+        camera.position.set(3, 0.15, 3);
 
-				scene = new THREE.Scene();
-				scene.background = new THREE.Color( 0x72645b );
-				scene.fog = new THREE.Fog( 0x72645b, 2, 15 );
+        cameraTarget = new THREE.Vector3(0, -0.1, 0);
 
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x72645b);
+        scene.fog = new THREE.Fog(0x72645b, 2, 15);
 
-				// Ground
 
-				var plane = new THREE.Mesh(
-					new THREE.PlaneBufferGeometry( 40, 40 ),
-					new THREE.MeshPhongMaterial( { color: 0x999999, specular: 0x101010 } )
-				);
-				plane.rotation.x = - Math.PI / 2;
-				plane.position.y = - 0.5;
-				scene.add( plane );
+        // Ground
 
-				plane.receiveShadow = true;
+        var plane = new THREE.Mesh(
+            new THREE.PlaneBufferGeometry(40, 40),
+            new THREE.MeshPhongMaterial({color: 0x999999, specular: 0x101010})
+        );
+        plane.rotation.x = -Math.PI / 2;
+        plane.position.y = -0.5;
+        scene.add(plane);
 
+        plane.receiveShadow = true;
 
-				// PLY file
 
-				var loader = new THREE.PLYLoader();
+        // PLY file
 
-				/*loader.load( 'files/beethoven.ply', function ( geometry ) {
+        var loader = new THREE.PLYLoader();
 
-					geometry.computeVertexNormals();
+        switch (val) {
+            case 'dolphins': {
+                loader.load('files/dolphins_colored.ply', function (geometry) {
 
-					var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
-					var mesh = new THREE.Mesh( geometry, material );
+                    geometry.computeVertexNormals();
 
-					mesh.position.y = - 0.2;
-					mesh.position.z = 0.3;
-					mesh.rotation.x = - Math.PI / 2;
-					mesh.scale.multiplyScalar( 0.1 );
+                    var material = new THREE.MeshStandardMaterial({color: 0x0055ff, flatShading: false});
+                    var mesh = new THREE.Mesh(geometry, material);
 
-					mesh.castShadow = true;
-					mesh.receiveShadow = true;
+                    mesh.position.y = -0.2;
+                    mesh.position.z = 0.3;
+                    mesh.rotation.x = -Math.PI / 2;
+                    mesh.scale.multiplyScalar(0.001);
 
-					scene.add( mesh );
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
 
-				} );*/
+                    scene.add(mesh);
 
-				/*loader.load( 'files/balance.ply', function ( geometry ) {
+                });
 
-					geometry.computeVertexNormals();
+                break;
+            }
+        }
 
-					var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
-					var mesh = new THREE.Mesh( geometry, material );
+        /*loader.load( 'files/beethoven.ply', function ( geometry ) {
 
-					mesh.position.y = - 0.2;
-					mesh.position.z = 0.3;
-					mesh.rotation.x = - Math.PI / 2;
-					mesh.scale.multiplyScalar( 0.005 );
+            geometry.computeVertexNormals();
 
-					mesh.castShadow = true;
-					mesh.receiveShadow = true;
+            var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+            var mesh = new THREE.Mesh( geometry, material );
 
-					scene.add( mesh );
+            mesh.position.y = - 0.2;
+            mesh.position.z = 0.3;
+            mesh.rotation.x = - Math.PI / 2;
+            mesh.scale.multiplyScalar( 0.1 );
 
-				} );*/
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
 
-				loader.load( 'files/apple.ply', function ( geometry ) {
+            scene.add( mesh );
 
-					geometry.computeVertexNormals();
+        } );*/
 
-					var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
-					var mesh = new THREE.Mesh( geometry, material );
+        /*loader.load( 'files/balance.ply', function ( geometry ) {
 
-					mesh.position.y = 0;
-					mesh.position.z = 0.3;
-					mesh.rotation.x = - Math.PI / 2;
-					mesh.scale.multiplyScalar( 3 );
+            geometry.computeVertexNormals();
 
-					mesh.castShadow = true;
-					mesh.receiveShadow = true;
+            var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+            var mesh = new THREE.Mesh( geometry, material );
 
-					scene.add( mesh );
+            mesh.position.y = - 0.2;
+            mesh.position.z = 0.3;
+            mesh.rotation.x = - Math.PI / 2;
+            mesh.scale.multiplyScalar( 0.005 );
 
-				} );
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
 
-				/*loader.load( 'files/airplane.ply', function ( geometry ) {
+            scene.add( mesh );
 
-					geometry.computeVertexNormals();
+        } );*/
 
-					var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
-					var mesh = new THREE.Mesh( geometry, material );
+        /*loader.load('files/apple.ply', function (geometry) {
 
-					mesh.position.y = - 0.2;
-					mesh.position.z = 0.3;
-					mesh.rotation.x = - Math.PI / 2;
-					mesh.scale.multiplyScalar( 0.001 );
+            geometry.computeVertexNormals();
 
-					mesh.castShadow = true;
-					mesh.receiveShadow = true;
+            var material = new THREE.MeshStandardMaterial({color: 0x0055ff, flatShading: false});
+            var mesh = new THREE.Mesh(geometry, material);
 
-					scene.add( mesh );
+            mesh.position.y = 0;
+            mesh.position.z = 0.3;
+            mesh.rotation.x = -Math.PI / 2;
+            mesh.scale.multiplyScalar(3);
 
-				} );*/
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
 
-				/*loader.load( 'files/ant.ply', function ( geometry ) {
+            scene.add(mesh);
 
-					geometry.computeVertexNormals();
+        });*/
 
-					var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
-					var mesh = new THREE.Mesh( geometry, material );
+        /*loader.load( 'files/airplane.ply', function ( geometry ) {
 
-					mesh.position.y = 0;
-					mesh.position.z = 0.3;
-					mesh.rotation.x = - Math.PI / 2;
-					mesh.scale.multiplyScalar( 0.02 );
+            geometry.computeVertexNormals();
 
-					mesh.castShadow = true;
-					mesh.receiveShadow = true;
+            var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+            var mesh = new THREE.Mesh( geometry, material );
 
-					scene.add( mesh );
+            mesh.position.y = - 0.2;
+            mesh.position.z = 0.3;
+            mesh.rotation.x = - Math.PI / 2;
+            mesh.scale.multiplyScalar( 0.001 );
 
-				} );*/
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
 
+            scene.add( mesh );
 
-				/*loader.load( 'files/dolphins_colored.ply', function ( geometry ) {
+        } );*/
 
-					geometry.computeVertexNormals();
+        /*loader.load( 'files/ant.ply', function ( geometry ) {
 
-					var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
-					var mesh = new THREE.Mesh( geometry, material );
+            geometry.computeVertexNormals();
 
-					mesh.position.y = - 0.2;
-					mesh.position.z = 0.3;
-					mesh.rotation.x = - Math.PI / 2;
-					mesh.scale.multiplyScalar( 0.001 );
+            var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+            var mesh = new THREE.Mesh( geometry, material );
 
-					mesh.castShadow = true;
-					mesh.receiveShadow = true;
+            mesh.position.y = 0;
+            mesh.position.z = 0.3;
+            mesh.rotation.x = - Math.PI / 2;
+            mesh.scale.multiplyScalar( 0.02 );
 
-					scene.add( mesh );
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
 
-				} );*/
+            scene.add( mesh );
 
-				// Lights
+        } );*/
 
-				scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
 
-				addShadowedLight( 1, 1, 1, 0xffffff, 1.35 );
-				addShadowedLight( 0.5, 1, - 1, 0xffaa00, 1 );
+        // Lights
 
-				// renderer
+        scene.add(new THREE.HemisphereLight(0x443333, 0x111122));
 
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
+        addShadowedLight(1, 1, 1, 0xffffff, 1.35);
+        addShadowedLight(0.5, 1, -1, 0xffaa00, 1);
 
-				renderer.gammaInput = true;
-				renderer.gammaOutput = true;
+        // renderer
 
-				renderer.shadowMap.enabled = true;
+        renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
 
-				container.appendChild( renderer.domElement );
+        renderer.gammaInput = true;
+        renderer.gammaOutput = true;
 
-				// stats
+        renderer.shadowMap.enabled = true;
 
-				stats = new Stats();
-				//container.appendChild( stats.dom );
+        container.appendChild(renderer.domElement);
 
-				// resize
+        // stats
 
-				window.addEventListener( 'resize', onWindowResize, false );
+        stats = new Stats();
+        //container.appendChild( stats.dom );
 
-			}
+        // resize
 
-			function addShadowedLight( x, y, z, color, intensity ) {
+        window.addEventListener('resize', onWindowResize, false);
 
-				var directionalLight = new THREE.DirectionalLight( color, intensity );
-				directionalLight.position.set( x, y, z );
-				scene.add( directionalLight );
+    }
 
-				directionalLight.castShadow = true;
+    function addShadowedLight(x, y, z, color, intensity) {
 
-				var d = 1;
-				directionalLight.shadow.camera.left = - d;
-				directionalLight.shadow.camera.right = d;
-				directionalLight.shadow.camera.top = d;
-				directionalLight.shadow.camera.bottom = - d;
+        var directionalLight = new THREE.DirectionalLight(color, intensity);
+        directionalLight.position.set(x, y, z);
+        scene.add(directionalLight);
 
-				directionalLight.shadow.camera.near = 1;
-				directionalLight.shadow.camera.far = 4;
+        directionalLight.castShadow = true;
 
-				directionalLight.shadow.mapSize.width = 1024;
-				directionalLight.shadow.mapSize.height = 1024;
+        var d = 1;
+        directionalLight.shadow.camera.left = -d;
+        directionalLight.shadow.camera.right = d;
+        directionalLight.shadow.camera.top = d;
+        directionalLight.shadow.camera.bottom = -d;
 
-				directionalLight.shadow.bias = - 0.001;
+        directionalLight.shadow.camera.near = 1;
+        directionalLight.shadow.camera.far = 4;
 
-			}
+        directionalLight.shadow.mapSize.width = 1024;
+        directionalLight.shadow.mapSize.height = 1024;
 
-			function onWindowResize() {
+        directionalLight.shadow.bias = -0.001;
 
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
+    }
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
+    function onWindowResize() {
 
-			}
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
 
-			function animate() {
+        renderer.setSize(window.innerWidth, window.innerHeight);
 
-				requestAnimationFrame( animate );
+    }
 
-				render();
-				stats.update();
+    function animate() {
 
-			}
+        requestAnimationFrame(animate);
 
-			function render() {
+        render();
+        stats.update();
 
-				var timer = Date.now() * 0.0005;
+    }
 
-				camera.position.x = Math.sin( timer ) * 2.5;
-				camera.position.z = Math.cos( timer ) * 2.5;
+    function render() {
 
-				camera.lookAt( cameraTarget );
+        var timer = Date.now() * 0.0005;
 
-				renderer.render( scene, camera );
+        camera.position.x = Math.sin(timer) * 2.5;
+        camera.position.z = Math.cos(timer) * 2.5;
 
-			}
+        camera.lookAt(cameraTarget);
 
-		</script>
-	</body>
+        renderer.render(scene, camera);
+
+    }
+
+</script>
+</body>
 </html>
