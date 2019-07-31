@@ -1,6 +1,7 @@
 .newCard{
     box-shadow: 2px 5px 4px #888888;
     margin-top: 8px;
+    margin-bottom: 8px;
     transition: 0.3s;
 }
 
