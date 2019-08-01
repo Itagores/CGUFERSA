@@ -11,24 +11,42 @@
 <script src="./build/three.js"></script>
 <script src="./js/libs/stats.min.js"></script>
 <script src="./js/loaders/PLYLoader.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
 
 <div style="position: absolute;margin: 16px;">
-    <select onchange="init(this.value);animate()">
+    <select onchange="window.location.href = 'webgl_loader_ply.html?ply='+this.value" id="select">
         <option value="airplane">airplane</option>
         <option value="ant">ant</option>
         <option value="apple">apple</option>
         <option value="beethoven">beethoven</option>
         <option value="dolphins">dolphins</option>
+        <option value="canstick">canstick</option>
+        <option value="chopper">chopper</option>
+        <option value="cow">cow</option>
+        <option value="egret">egret</option>
+        <option value="f16">f16</option>
+        <option value="galleon">galleon</option>
+        <option value="shark">shark</option>
+        <option value="weathervane">weathervane</option>
     </select>
 </div>
 
 <script>
 
+    $.urlParam = function (name) {
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        return results[1] || 0;
+    }
+
     var container, stats;
 
     var camera, cameraTarget, scene, renderer;
 
-    init('dolphins');
+    $('#select').val($.urlParam('ply'));
+
+    init($.urlParam('ply'));
     animate();
 
     function init(val) {
@@ -86,102 +104,303 @@
 
                 break;
             }
+
+            case 'beethoven': {
+                loader.load('files/beethoven.ply', function (geometry) {
+
+                    geometry.computeVertexNormals();
+
+                    var material = new THREE.MeshStandardMaterial({color: 0x0055ff, flatShading: false});
+                    var mesh = new THREE.Mesh(geometry, material);
+
+                    mesh.position.y = 0.2;
+                    mesh.position.z = 0.3;
+                    //mesh.rotation.x = -Math.PI / 2;
+                    mesh.scale.multiplyScalar(0.1);
+
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+
+                    scene.add(mesh);
+
+                });
+                break;
+            }
+
+            case 'balance':{
+                loader.load( 'files/balance.ply', function ( geometry ) {
+
+                    geometry.computeVertexNormals();
+
+                    var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+                    var mesh = new THREE.Mesh( geometry, material );
+
+                    mesh.position.y = - 0.2;
+                    mesh.position.z = 0.3;
+                    mesh.rotation.x = - Math.PI / 2;
+                    mesh.scale.multiplyScalar( 0.005 );
+
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+
+                    scene.add( mesh );
+
+                } );
+                break;
+            }
+
+            case 'apple' : {
+                loader.load('files/apple.ply', function (geometry) {
+
+                    geometry.computeVertexNormals();
+
+                    var material = new THREE.MeshStandardMaterial({color: 0x0055ff, flatShading: false});
+                    var mesh = new THREE.Mesh(geometry, material);
+
+                    mesh.position.y = 0;
+                    mesh.position.z = 0.3;
+                    mesh.rotation.x = -Math.PI / 2;
+                    mesh.scale.multiplyScalar(3);
+
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+
+                    scene.add(mesh);
+
+                });
+                break;
+            }
+
+            case 'airplane':{
+                loader.load( 'files/airplane.ply', function ( geometry ) {
+
+                    geometry.computeVertexNormals();
+
+                    var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+                    var mesh = new THREE.Mesh( geometry, material );
+
+                    mesh.position.y = - 0.2;
+                    mesh.position.z = 0.3;
+                    mesh.rotation.x = - Math.PI / 2;
+                    mesh.scale.multiplyScalar( 0.001 );
+
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+
+                    scene.add( mesh );
+
+                } );
+
+                break;
+            }
+
+            case 'ant':{
+                loader.load( 'files/ant.ply', function ( geometry ) {
+
+                    geometry.computeVertexNormals();
+
+                    var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+                    var mesh = new THREE.Mesh( geometry, material );
+
+                    mesh.position.y = 0;
+                    mesh.position.z = 0.3;
+                    mesh.rotation.x = - Math.PI / 2;
+                    mesh.scale.multiplyScalar( 0.02 );
+
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+
+                    scene.add( mesh );
+
+                } );
+
+                break;
+            }
+
+            case 'canstick':{
+                loader.load( 'files/canstick.ply', function ( geometry ) {
+
+                    geometry.computeVertexNormals();
+
+                    var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+                    var mesh = new THREE.Mesh( geometry, material );
+
+                    mesh.position.y = 0;
+                    mesh.position.z = 0.3;
+                    mesh.rotation.x = - Math.PI / 2;
+                    mesh.scale.multiplyScalar( 2 );
+
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+
+                    scene.add( mesh );
+
+                } );
+
+                break;
+            }
+
+            case 'chopper':{
+                loader.load( 'files/chopper.ply', function ( geometry ) {
+
+                    geometry.computeVertexNormals();
+
+                    var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+                    var mesh = new THREE.Mesh( geometry, material );
+
+                    mesh.position.y = 0;
+                    mesh.position.z = 0.3;
+                    mesh.rotation.x = - Math.PI / 2;
+                    mesh.scale.multiplyScalar( 0.01 );
+
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+
+                    scene.add( mesh );
+
+                } );
+
+                break;
+            }
+
+            case 'cow':{
+                loader.load( 'files/cow.ply', function ( geometry ) {
+
+                    geometry.computeVertexNormals();
+
+                    var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+                    var mesh = new THREE.Mesh( geometry, material );
+
+                    mesh.position.y = 0.1;
+                    mesh.position.z = 0.3;
+                    mesh.rotation.x = - Math.PI / 2;
+                    mesh.scale.multiplyScalar( 0.5 );
+
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+
+                    scene.add( mesh );
+
+                } );
+
+                break;
+            }
+
+            case 'egret':{
+                loader.load( 'files/egret.ply', function ( geometry ) {
+
+                    geometry.computeVertexNormals();
+
+                    var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+                    var mesh = new THREE.Mesh( geometry, material );
+
+                    mesh.position.y = 0.5;
+                    mesh.position.z = 0.3;
+                    mesh.rotation.x = - Math.PI / 2;
+                    mesh.scale.multiplyScalar( 0.0003 );
+
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+
+                    scene.add( mesh );
+
+                } );
+
+                break;
+            }
+
+            case 'f16':{
+                loader.load( 'files/f16.ply', function ( geometry ) {
+
+                    geometry.computeVertexNormals();
+
+                    var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+                    var mesh = new THREE.Mesh( geometry, material );
+
+                    mesh.position.y = 0;
+                    mesh.position.z = 0.3;
+                    //mesh.rotation.x = - Math.PI / 2;
+                    mesh.scale.multiplyScalar( 0.05 );
+
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+
+                    scene.add( mesh );
+
+                } );
+
+                break;
+            }
+
+            case 'galleon':{
+                loader.load( 'files/galleon.ply', function ( geometry ) {
+
+                    geometry.computeVertexNormals();
+
+                    var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+                    var mesh = new THREE.Mesh( geometry, material );
+
+                    mesh.position.y = 0;
+                    mesh.position.z = 0.3;
+                    mesh.rotation.x = - Math.PI / 2;
+                    mesh.scale.multiplyScalar( 0.001 );
+
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+
+                    scene.add( mesh );
+
+                } );
+
+                break;
+            }
+
+            case 'shark':{
+                loader.load( 'files/shark.ply', function ( geometry ) {
+
+                    geometry.computeVertexNormals();
+
+                    var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+                    var mesh = new THREE.Mesh( geometry, material );
+
+                    mesh.position.y = 0.2;
+                    mesh.position.z = 0.3;
+                    mesh.rotation.x = - Math.PI / 2;
+                    mesh.scale.multiplyScalar( 0.2 );
+
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+
+                    scene.add( mesh );
+
+                } );
+
+                break;
+            }
+
+            case 'weathervane':{
+                loader.load( 'files/weathervane.ply', function ( geometry ) {
+
+                    geometry.computeVertexNormals();
+
+                    var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
+                    var mesh = new THREE.Mesh( geometry, material );
+
+                    mesh.position.y = 0.4;
+                    mesh.position.z = 0.3;
+                    mesh.rotation.x = - Math.PI / 2;
+                    mesh.scale.multiplyScalar( 0.001 );
+
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+
+                    scene.add( mesh );
+
+                } );
+
+                break;
+            }
         }
-
-        /*loader.load( 'files/beethoven.ply', function ( geometry ) {
-
-            geometry.computeVertexNormals();
-
-            var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
-            var mesh = new THREE.Mesh( geometry, material );
-
-            mesh.position.y = - 0.2;
-            mesh.position.z = 0.3;
-            mesh.rotation.x = - Math.PI / 2;
-            mesh.scale.multiplyScalar( 0.1 );
-
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
-
-            scene.add( mesh );
-
-        } );*/
-
-        /*loader.load( 'files/balance.ply', function ( geometry ) {
-
-            geometry.computeVertexNormals();
-
-            var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
-            var mesh = new THREE.Mesh( geometry, material );
-
-            mesh.position.y = - 0.2;
-            mesh.position.z = 0.3;
-            mesh.rotation.x = - Math.PI / 2;
-            mesh.scale.multiplyScalar( 0.005 );
-
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
-
-            scene.add( mesh );
-
-        } );*/
-
-        /*loader.load('files/apple.ply', function (geometry) {
-
-            geometry.computeVertexNormals();
-
-            var material = new THREE.MeshStandardMaterial({color: 0x0055ff, flatShading: false});
-            var mesh = new THREE.Mesh(geometry, material);
-
-            mesh.position.y = 0;
-            mesh.position.z = 0.3;
-            mesh.rotation.x = -Math.PI / 2;
-            mesh.scale.multiplyScalar(3);
-
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
-
-            scene.add(mesh);
-
-        });*/
-
-        /*loader.load( 'files/airplane.ply', function ( geometry ) {
-
-            geometry.computeVertexNormals();
-
-            var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
-            var mesh = new THREE.Mesh( geometry, material );
-
-            mesh.position.y = - 0.2;
-            mesh.position.z = 0.3;
-            mesh.rotation.x = - Math.PI / 2;
-            mesh.scale.multiplyScalar( 0.001 );
-
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
-
-            scene.add( mesh );
-
-        } );*/
-
-        /*loader.load( 'files/ant.ply', function ( geometry ) {
-
-            geometry.computeVertexNormals();
-
-            var material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: false } );
-            var mesh = new THREE.Mesh( geometry, material );
-
-            mesh.position.y = 0;
-            mesh.position.z = 0.3;
-            mesh.rotation.x = - Math.PI / 2;
-            mesh.scale.multiplyScalar( 0.02 );
-
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
-
-            scene.add( mesh );
-
-        } );*/
 
 
         // Lights
