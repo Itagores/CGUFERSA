@@ -12,7 +12,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-xs-12 col-lg-4 col-md-6">
-            <canvas width="300" height="300" id="my_Canvas"></canvas>
+            <canvas width="300" height="300" id="my_Canvas" style="cursor:pointer;"></canvas>
         </div>
     </div>
 </div>
@@ -325,8 +325,8 @@
 
     /*=================== Drawing =================== */
 
-    var THETA = 0,
-        PHI = 0;
+    var THETA = 0.5,
+        PHI = 0.5;
     var time_old = 0;
 
     var animate = function(time) {
@@ -351,8 +351,10 @@
             mo_matrix[12] = 0, mo_matrix[13] = 0, mo_matrix[14] = 0,
             mo_matrix[15] = 1;
 
-        rotateY(mo_matrix, THETA);
         rotateX(mo_matrix, PHI);
+        rotateY(mo_matrix, THETA);
+        //rotateX(mo_matrix, PHI+0.5);
+        // rotateY(mo_matrix, THETA-0.5);
 
         time_old = time;
         gl.enable(gl.DEPTH_TEST);
