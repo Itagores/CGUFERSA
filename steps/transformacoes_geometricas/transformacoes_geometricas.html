@@ -100,21 +100,22 @@
                     <p align="CENTER"><strong>Figura 10.1 - Saída do programa <a href="Desenhando.html#Quadrado">Quadrado.c</a>
                         após a alteração da função "Desenha"</strong></p>
 
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-secondary active">
-                            <input type="radio" name="options" id="option1" autocomplete="off" onchange="load(1)"> Translação
-                        </label>
-                        <label class="btn btn-secondary">
-                            <input type="radio" name="options" id="option3" autocomplete="off" checked onchange="load(3)"> Escala
-                        </label>
-                        <label class="btn btn-secondary">
-                            <input type="radio" name="options" id="option2" autocomplete="off" checked onchange="load(2)"> Rotação
-                        </label>
+
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <h5 class="card-title">Escala</h5>
+                            <iframe src="escala.html" style="height: 450px;border: none"></iframe>
+                        </div>
+                        <div class="col">
+                            <h5 class="card-title">Rotação</h5>
+                            <iframe src="rotacao.html" style="height: 450px;border: none"></iframe>
+                        </div>
+                        <div class="col">
+                            <h5 class="card-title">Translação</h5>
+                            <iframe src="translacao.html" style="height: 450px;border: none"></iframe>
+                        </div>
                     </div>
 
-                    <div class="row" id="content">
-
-                    </div>
 
                     <div class="row justify-content-center mt-4">
                         <a href="../linhas_pontos_poligonos/linhas_pontos_poligonos.html" class="btn btn-outline-dark">Anterior</a>
@@ -138,7 +139,7 @@
         crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<script>
+<!--<script>
 
     function load(param){
         if(param === 1){
@@ -152,59 +153,9 @@
     }
 
     load(1);
-</script>
+</script>-->
 
-<script>
-    function cod() {
 
-        $("#sliderTransX").slider({
-            max: 1,
-            min: -1,
-            value: 0.0,
-            step: 0.01,
-            change: function (event, ui) {
-                document.getElementById('transX').innerText = ui.value;
-                transX = ui.value;
-                translacao();
-            }
-        });
-        $("#sliderTransY").slider({
-            max: 1,
-            min: -1,
-            value: 0.0,
-            step: 0.01,
-            change: function (event, ui) {
-                document.getElementById('transY').innerText = ui.value;
-                transY = ui.value;
-                translacao();
-            }
-        });
-
-        $("#sliderEscX").slider({
-            max: 2,
-            min: 1,
-            value: 1,
-            step: 0.01,
-            change: function (event, ui) {
-                document.getElementById('escX').innerText = ui.value;
-                escX = ui.value;
-                escala();
-            }
-        });
-        $("#sliderEscY").slider({
-            max: 2,
-            min: 1,
-            value: 1,
-            step: 0.01,
-            change: function (event, ui) {
-                document.getElementById('escY').innerText = ui.value;
-                escY = ui.value;
-                escala();
-            }
-        });
-
-    }
-</script>
 
 </body>
 </html>

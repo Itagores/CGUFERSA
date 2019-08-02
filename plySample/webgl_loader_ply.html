@@ -16,7 +16,7 @@
         crossorigin="anonymous"></script>
 
 <div style="position: absolute;margin: 16px;">
-    <select onchange="window.location.href = 'webgl_loader_ply.html?ply='+this.value" id="select">
+    <select onchange="window.location.href = 'webgl_loader_ply.html?ply='+this.value+'&option=true'" id="select">
         <option value="airplane">airplane</option>
         <option value="ant">ant</option>
         <option value="apple">apple</option>
@@ -45,6 +45,11 @@
     var camera, cameraTarget, scene, renderer;
 
     $('#select').val($.urlParam('ply'));
+
+    if($.urlParam('option') === 'false'){
+        $('#select').hide();
+    }
+
 
     init($.urlParam('ply'));
     animate();
