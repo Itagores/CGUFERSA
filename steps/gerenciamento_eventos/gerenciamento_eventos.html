@@ -190,7 +190,7 @@ int main(void)
 }
 </pre>
                     <div class="row justify-content-center">
-                        <canvas width="570" height="570" id="my_Canvas"></canvas>
+                        <canvas width="570" height="570" id="my_Canvas" style="cursor: pointer"></canvas>
                     </div>
 
                     <script>
@@ -387,8 +387,8 @@ int main(void)
 
                         /*=================== Drawing =================== */
 
-                        var THETA = 0,
-                            PHI = 0;
+                        var THETA = 0.3,
+                            PHI = -0.3;
                         var time_old = 0;
 
                         var animate = function (time) {

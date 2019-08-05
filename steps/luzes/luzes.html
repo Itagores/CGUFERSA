@@ -153,7 +153,7 @@ precision mediump int;
 
                     <h5 class="card-title">Utilizando Luzes</h5>
 
-                        <p class="card-text">Como é possível observar na <a href="Programando3D.html#figura14_4">figura 14.4</a>,
+                        <p class="card-text">Como é possível observar na figura 14.4,
                             a imagem gerada não possui uma qualidade satisfatória. Para adicionar um pouco de realismo nas
                             imagens, é necessário, então, adicionar uma ou mais fontes de luz.
                         </p>
@@ -374,19 +374,11 @@ int main(void)
 }
 </pre>
 
-                        </a><p class="card-text"><a name="Exemplo"><i>Obs.: </i></a><i><a href="Iluminacao.c">Clique aqui</a> para
-                        fazer o download deste programa.</i>
                     </p>
 
                         <b><p align="center"><img src="Figura15.1.png"></p>
                         </b><p align="CENTER"><strong>Figura 15.1 - Saída do programa Iluminacao.c</strong></p>
-
-                        <p class="card-text"> As funções utilizadas neste exemplo, e que não foram descritas no
-                            <a href="Programando3D.html#DescricaoFuncoes">capítulo anterior</a>,  são apresentadas a seguir
-                            segundo [Woo 1999] e [Wright 2000].
-                        </p>
-
-                        <ul>
+                            <ul>
 
                             <li><p class="card-text"><b><i>glShadeModel(GL_SMOOTH);</i></b>
                                 estabelece o modelo de colorização: GL_FLAT (a cor não varia na primitiva que é desenhada -
@@ -481,8 +473,7 @@ int main(void)
                                 parâmetros que estão sendo especificados [Wright 2000].
                             </p></li>
 
-                            <li><p class="card-text"><b><i>glEnable(GL_COLOR_MATERIAL);</i></b>
-                                conforme já explicado no <a href="MaquinaDeEstados.html">capítulo 6</a>, a função
+                            <li><p class="card-text"><b><i>glEnable(GL_COLOR_MATERIAL);</i></b>a função
                                 <i>glEnable</i> é usada para habilitar uma variável de estado OpenGL. Neste caso,
                                 estão sendo habilitadas: GL_COLOR_MATERIAL (atribui a cor para o material a partir
                                 da cor corrente), GL_DEPTH_TEST (controla as comparações de profundidade e
@@ -492,7 +483,7 @@ int main(void)
 
                             <li><p class="card-text"><b><i>glutSwapBuffers();</i></b> e
                                 <b><i>glutInitDisplayMode(GLUT_DOUBLE...);</i></b> já
-                                <a href="Animacao.html#glutSwapBuffers">explicadas anteriormente</a>,
+                                explicadas anteriormente,
                                 são usadas para evitar que a imagem fique "piscando" a cada interação (por exemplo,
                                 quando se faz <i>zoom-in</i> e <i>zoom-out</i>).
                             </p></li>
